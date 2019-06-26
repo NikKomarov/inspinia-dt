@@ -53,7 +53,7 @@ namespace inspinia_playground
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Order}/{action=Index}/{id?}");
             });
         }
     }
