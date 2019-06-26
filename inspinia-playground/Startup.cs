@@ -41,6 +41,7 @@ namespace inspinia_playground
 
                 options.UseInMemoryDatabase("sales");
             });
+
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
