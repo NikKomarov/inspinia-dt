@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "inspinia-playground", "inspinia-playground\inspinia-playground.csproj", "{C08CEA45-1672-4796-85D8-D479E515982B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{34A9C88C-74C3-4D71-A155-0D0069238634}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C08CEA45-1672-4796-85D8-D479E515982B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C08CEA45-1672-4796-85D8-D479E515982B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C08CEA45-1672-4796-85D8-D479E515982B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34A9C88C-74C3-4D71-A155-0D0069238634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34A9C88C-74C3-4D71-A155-0D0069238634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34A9C88C-74C3-4D71-A155-0D0069238634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34A9C88C-74C3-4D71-A155-0D0069238634}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
