@@ -37,7 +37,7 @@
                                         <th>Номер заказа</th>
                                         <th>Статус</th>
                                         <th>Клиент</th>
-                                        <th>Телефон</th>
+                                        <th>Email</th>
                                         <th>Сумма</th>
                                     </tr>
                                 </thead>
@@ -63,8 +63,19 @@
     <script>
         $(document).ready(function () {
             $('.dataTables-example').DataTable({
-                pageLength: 25,
                 responsive: true,
+                serverSide: true,
+                "ajax": {
+                    "url": "/order/GetDatatable",
+                    "type": "POST"
+                },
+                columns: [
+                    { data: "id" },
+                    { data: "status" },
+                    { data: "client" },
+                    { data: "email" },
+                    { data: "sum" }
+                ],
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     { extend: 'copy' },
