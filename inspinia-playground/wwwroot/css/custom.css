@@ -1,0 +1,15 @@
+﻿[status="Создан"] {
+    background-color: #5bc0de !important
+}
+
+[status="На доставке"] {
+    background-color: #FCEF9C !important
+}
+
+[status="Доставлен"] {
+    background-color: #FCBC9C !important
+}
+
+[status="В работе"] {
+    background-color: #dde8ed !important
+}

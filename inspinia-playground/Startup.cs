@@ -33,7 +33,16 @@ namespace inspinia_playground
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            InstallSalesDbContext(services);
 
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
+
+        //TODO: вынести в отдельный класс инсталлер в виде extension
+        private void InstallSalesDbContext(IServiceCollection services)
+        {
             var connectionString = Configuration.GetConnectionString("SalesDbConnection");
             var migrationsAssembly = typeof(SalesDbContext).GetTypeInfo().Assembly.FullName;
             services.AddDbContext<SalesDbContext>(options =>
@@ -41,10 +50,6 @@ namespace inspinia_playground
 
                 options.UseInMemoryDatabase("sales");
             });
-
-            services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
