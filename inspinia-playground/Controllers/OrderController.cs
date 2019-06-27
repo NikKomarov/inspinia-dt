@@ -4,6 +4,7 @@ using inspinia.Models.Datatables;
 using inspinia.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -56,6 +57,36 @@ namespace inspinia_playground.Controllers
         [HttpPost]
         public IActionResult GetDatatable(DataTableAjaxPostModel request)
         {
+            var predicate = GetPredicate(request);
+
+            var entities = Sort(_data.Orders.Where(predicate), request)
+                .Skip(request.start)
+                .Take(request.length);
+
+            var total = _data.Orders.Count();
+            var totalFilter = _data.Orders.Where(predicate).Count();
+
+            var orders = entities.Select(m => new OrderItemResponse
+            {
+                Id = m.Id,
+                Client = m.Client,
+                Email = m.Email,
+                Status = m.Status,
+                Sum = m.Sum
+            });
+
+            return Json(new
+            {
+                draw = request.draw,
+                recordsTotal = total,
+                recordsFiltered = totalFilter,
+                data = orders
+            });
+        }
+
+        [NonAction]
+        private Expression<Func<Data.Order, bool>> GetPredicate(DataTableAjaxPostModel request)
+        {
             Expression<Func<Data.Order, bool>> predicate = order => true;
 
             if (!string.IsNullOrWhiteSpace(request.search?.value))
@@ -68,30 +99,42 @@ namespace inspinia_playground.Controllers
                     //TODO: придумать что-то умнее
                     || order.Sum.ToString() == search;
             }
-            var entities = _data.Orders
-                .Where(predicate)
-                .Skip(request.start)
-                .Take(request.length);
 
-            var total = _data.Orders.Count();
-            var totalFilter = _data.Orders.Where(predicate).Count();
+            return predicate;
+        }
 
-            var orders = entities.Select(m => new OrderItemResponse
-                {
-                    Id = m.Id,
-                    Client = m.Client,
-                    Email = m.Email,
-                    Status = m.Status,
-                    Sum = m.Sum
-                });
-
-            return Json(new
+        [NonAction]
+        private IEnumerable<Data.Order> Sort(IEnumerable<Data.Order> collection, DataTableAjaxPostModel request)
+        {
+            if (request.order.Any())
             {
-                draw = request.draw,
-                recordsTotal = total,
-                recordsFiltered = totalFilter,
-                data = orders
-            });
+                var order = request.order.First();
+                var func = GetSortingFunc(order.column);
+                switch (order.dir)
+                {
+                    case "asc": return collection.OrderBy(func);
+                    case "desc": return collection.OrderByDescending(func);
+                    default:
+                        break; 
+                }
+               
+            }
+
+            return collection;
+        }
+
+        [NonAction]
+        private Func<Data.Order, object> GetSortingFunc(int column)
+        {
+            switch (column)
+            {
+                case 0: return order => order.Id;
+                case 1: return order => order.Status;
+                case 2: return order => order.Client;
+                case 3: return order => order.Email;
+                case 4: return order => order.Sum;
+                default: throw new ArgumentException(nameof(column));
+            }
         }
     }
 }

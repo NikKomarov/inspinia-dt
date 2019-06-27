@@ -5,6 +5,7 @@
             $('.dataTables-example').DataTable({
                 responsive: true,
                 serverSide: true,
+                ordering: true,
                 "ajax": {
                     "url": "/order/GetDatatable",
                     "type": "POST"
